@@ -87,7 +87,6 @@ You will need to use `querystring.parse()` to convert the `allTheData` query str
 
 ```js
 request.on('end', function () {
-
     var convertedData = querystring.parse(allTheData);
     console.log(convertedData);
     response.end();
