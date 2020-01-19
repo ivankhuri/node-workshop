@@ -1,4 +1,8 @@
-const fs = require('fs');
+
+
+
+
+/*const fs = require('fs');
 const path = require('path');
 const querystring = require('querystring');
 
@@ -25,8 +29,8 @@ var handler = function (request, response) {
             }
             response.end(file);
         });
-    } /*else if (endpoint.includes('/script.js')) {
-        response.writeHead(200, { "Content-Type": "application/javascript" });
+    } else if (endpoint.includes('/script.js')) {
+        response.writeHead(200, { "Content-Type": "application/js" });
 
         fs.readFile(path.join(__dirname, '../public/script.js'), (error, file) => {
             if (error) {
@@ -35,7 +39,27 @@ var handler = function (request, response) {
             }
             response.end(file);
         });
-    }*/ else if (endpoint.includes('/image.jpg')) {
+    } else if (endpoint.includes('posts')) {
+        response.writeHead(200, { "Content-Type": "application/json" });
+
+        fs.readFile(path.join(__dirname, '../src/posts.json'), (error, file) => {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            response.end(file);
+        });
+    } else if (endpoint.includes('logo2.png')) {
+        response.writeHead(200, { "Content-Type": "image/png" });
+
+        fs.readFile(path.join(__dirname, '../public/img/logo2.png'), (error, file) => {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            response.end(file);
+        });
+    } else if (endpoint.includes('/image.jpg')) {
         response.writeHead(200, { "Content-Type": "image/jpg" });
 
         fs.readFile(path.join(__dirname, '../public/img/image.jpg'), (error, file) => {
@@ -63,4 +87,4 @@ var handler = function (request, response) {
     }
 }
 
-module.exports = handler;
+module.exports = handler;*/
