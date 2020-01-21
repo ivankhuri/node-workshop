@@ -1,7 +1,52 @@
+const fs = require('fs');
+const path = require('path');
+const querystring = require('querystring');
+const extensionType = {
+    html: { 'Content-Type': 'text/html' },
+    css: { 'Content-Type': 'text/css' },
+    js: { 'Content-Type': 'application/js' },
+    ico: { 'Content-Type': 'image/x-icon' },
+    png: { 'Content-Type': 'image/png' },
+    jpg: { 'Content-Type': 'image/jpg' }
+};
 
+var handler = function (request, response) {
+    var url = (request.url === '/') ?
+        path.join(__dirname, '..', 'public', 'index.html') :
+        path.join(__dirname, '..', 'public', request.url);
+    var extension = url.split('.')[1];
 
+    console.log(url);
+    console.log(extension);
 
+    if (url.includes('create')) {
+        var allTheData = '';
+        request.on('data', function (chunkOfData) {
+            allTheData += chunkOfData;
+        });
 
+        request.on('end', function () {
+            response.writeHead(302, { 'Location': '/' });
+            var convertedData = querystring.parse(allTheData);
+            console.log(convertedData);
+            response.end();
+        });
+        return;
+    }
+
+    fs.readFile(url, function (error, file) {
+        if (error) {
+            response.writeHead(404, extensionType.html);
+            response.end('404 Content not found');
+            return;
+        }
+        response.writeHead(200, extensionType[extension]);
+        console.log('LOADED SUCCESSFULLY');
+        response.end(file);
+    });
+}
+
+module.exports = handler;
 /*const fs = require('fs');
 const path = require('path');
 const querystring = require('querystring');
